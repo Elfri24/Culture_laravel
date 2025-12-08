@@ -28,8 +28,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Redirection vers /layout après login réussi
-        return redirect()->intended('/layout');
+        if (auth()->user()->role->role_name == 'Administrateur'){
+                    // Redirection vers /layout après login réussi
+                return redirect()->intended('/layout');
+        }else{
+                // Redirection vers /layout après login réussi
+                 return redirect()->intended('/dashboard');
+        }
     }
 
     /**
