@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -12,8 +11,9 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         // Contenus validés par utilisateur
-        $contenusValidesCount = \App\Models\Contenu::where('id_auteur', $user->id_utilisateur)
-            ->where('statut', 'validé')->count();
+        $contenusValidesCount = \App\Models\Contenu::where('statut', 'valide')->count();
+
+        return view('dashboard', compact('contenusValidesCount'));
 
         // Contenus en attente
         $contenusEnAttenteCount = \App\Models\Contenu::where('id_auteur', $user->id_utilisateur)
@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $languesParleesCount = \DB::table('parler')
             ->join('region', 'parler.id_region', '=', 'region.id_region')
             ->join('langue', 'parler.id_langue', '=', 'langue.id_langue')
-            ->whereIn('parler.id_region', function ($q) use ($user) {
+            ->whereIn('parler.id_region', function ($q) {
                 // Par exemple, récupérer régions de l'utilisateur s'il y a une relation
                 // Ici on simplifie, à adapter selon tes relations réelles
                 return [];

@@ -24,12 +24,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        // Redirection vers /layout après login réussi
-        return redirect()->intended('/layout');
+        if (auth()->utilisateur()->role->nom_role == 'Administrateur'){
+                    // Redirection vers /layout après login réussi
+                return redirect()->intended('/layout');
+        }else{
+                // Redirection vers /dashboard après login réussi
+                 return redirect()->intended('/dashboard');
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ContenuController;
 use App\Http\Controllers\LangueController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
@@ -12,8 +13,6 @@ use App\Http\Controllers\TypeContenuController;
 use App\Http\Controllers\TypeMediaController;
 use App\Http\Controllers\UtilisateursController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaiementController;
-
 
 Route::get('/', function () {
     return view('index');
@@ -44,6 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/layout', function () {
+        return view('layout');
+    })->name('layout');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
