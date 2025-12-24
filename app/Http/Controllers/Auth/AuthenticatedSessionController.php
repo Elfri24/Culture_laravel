@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -24,12 +25,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        if (auth()->utilisateur()->role->nom_role == 'Administrateur'){
-                    // Redirection vers /layout après login réussi
-                return redirect()->intended('/layout');
-        }else{
-                // Redirection vers /dashboard après login réussi
-                 return redirect()->intended('/dashboard');
+        $request->authenticate();
+        $request->session()->regenerate();
+        
+        // Utiliser le bon nom pour votre configuration
+        // Option 1: Via Auth::guard()
+        $utilisateur = auth()->user();
+        
+        Log::info('Tes de l\'utilisateur recuperer '. $utilisateur->role_id);
+        
+        // Option 2: Via auth() helper (si configuré)
+        // $utilisateur = auth()->utilisateur();
+        
+        if ($utilisateur && $utilisateur->role_id == 1) {
+            // Redirection vers /layout pour les administrateurs
+            return redirect()->intended('/layout');
+        } else {
+            // Redirection vers /dashboard pour les autres
+            return redirect()->intended('/dashboard');
         }
     }
 

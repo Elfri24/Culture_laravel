@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ContenuController;
@@ -37,7 +38,7 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::get('/paiement', [PaiementController::class, 'showForm'])->name('paiement.form');
 Route::post('/paiement', [PaiementController::class, 'processPaiement'])->name('paiement.process');
 Route::get('/paiement/success', [PaiementController::class, 'success'])->name('paiement.success');
-
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', function () {

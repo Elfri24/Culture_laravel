@@ -50,7 +50,7 @@ class UtilisateursSeeder extends Seeder
         Utilisateur::create([
             'nom' => 'COMLAN',
             'prenom' => 'Maurice',
-            'email' => 'maurices.comlan@gmail.com',
+            'email' => 'maurice.comlan@uac.bj',
             'mot_de_passe' => Hash::make('Eneam123'),
             'role_id' => 1,
             'langue_id' => 1,
